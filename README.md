@@ -1,175 +1,358 @@
-# 会社関係者管理システム 
-### プロジェクト概要
+# Employee Management System
 
-C++で実装された会社関係者管理システムです。オブジェクト指向プログラミング(OOP)の原則に基づいて設計され、会社関係者情報の完全な管理機能を提供します。
+## Language
 
-### 主な機能
+- [日本語](#日本語)
+- [English](#english)
 
--  **会社関係者情報の追加** - 新しい会社関係者データを追加
--  **会社関係者情報の表示** - 全会社関係者の情報を一覧表示
--  **会社関係者の削除** - 退職した会社関係者のデータを削除
--  **会社関係者情報の変更** - 既存の会社関係者情報を更新
--  **会社関係者情報の検索** - 番号または名前で会社関係者を検索
--  **並び替え機能** - 会社関係者番号で昇順/降順に並び替え
--  **データの一括削除** - すべての会社関係者データをクリア
--  **データ永続化** - ファイルへの自動保存
+---
 
-### システム構成
+## 日本語
 
-#### クラス階層
+### 概要
 
+このプロジェクトは、C++で作成したコンソール形式の従業員管理システムです。
+
+C++のクラス、継承、ポリモーフィズム、動的メモリ管理、ファイル入出力を練習するために作成しました。  
+従業員情報の追加、表示、削除、変更、検索、並び替え、ファイル保存を行うことができます。
+
+---
+
+### 実装した機能
+
+- メニュー画面の表示
+- 従業員情報の追加
+- 従業員情報の表示
+- 従業員情報の削除
+- 従業員情報の変更
+- 従業員番号による検索
+- 従業員名による検索
+- 従業員番号による昇順・降順ソート
+- すべての従業員データの削除
+- 従業員データを `empfilex.txt` に保存
+- プログラム起動時にファイルから従業員データを読み込み
+
+---
+
+### 管理できる職種
+
+このシステムでは、以下の3種類の職種を管理できます。
+
+| 職種番号 | 職種 |
+|---|---|
+| 1 | 一般従業員 |
+| 2 | マネージャー |
+| 3 | 社長 |
+
+それぞれの職種は、`Worker` 抽象クラスを継承して作成しています。
+
+---
+
+### プログラムの流れ
+
+```text
+メニュー表示
+    ↓
+ユーザーが操作を選択
+    ↓
+従業員情報の追加・表示・削除・変更・検索・並び替え
+    ↓
+変更内容をファイルに保存
+    ↓
+次回起動時にファイルからデータを読み込み
 ```
-Worker (抽象基底クラス)
-├── Employee (一般従業員)
-├── Manager (マネージャー)
-└── Boss (社長)
+
+---
+
+### プロジェクト構成
+
+```text
+Employee_Management_System/
+│
+├── Employee Management System.cpp
+├── worker.h
+├── workerManager.h
+├── workerManager.cpp
+├── employee.h
+├── employee.cpp
+├── manager.h
+├── manager.cpp
+├── boss.h
+├── boss.cpp
+├── empfiex.txt
+└── README.md
 ```
 
-#### ファイル構成
+---
 
+### ファイル説明
+
+| ファイル名 | 説明 |
+|---|---|
+| `Employee Management System.cpp` | メイン関数。メニュー選択と全体の流れを管理 |
+| `worker.h` | 従業員の抽象基底クラス `Worker` を定義 |
+| `workerManager.h` | `WorkerManager` クラスの宣言 |
+| `workerManager.cpp` | 従業員管理機能の実装 |
+| `employee.h / employee.cpp` | 一般従業員クラスの定義と実装 |
+| `manager.h / manager.cpp` | マネージャークラスの定義と実装 |
+| `boss.h / boss.cpp` | 社長クラスの定義と実装 |
+| `empfilex.txt` | 従業員データを保存するファイル |
+
+---
+
+### クラス構成
+
+```text
+Worker
+│
+├── Employee
+├── Manager
+└── Boss
 ```
-employee-management-system/
-├── main.cpp                 # メインプログラム
-├── workerManager.h          # WorkerManagerクラス定義
-├── workerManager.cpp        # WorkerManagerクラス実装
-├── worker.h                 # Worker抽象クラス定義
-├── employee.h               # Employeeクラス定義
-├── employee.cpp             # Employeeクラス実装
-├── manager.h                # Managerクラス定義
-├── manager.cpp              # Managerクラス実装
-├── boss.h                   # Bossクラス定義
-├── boss.cpp                 # Bossクラス実装
-└── empfilex.txt             # データ保存ファイル (自動生成)
+
+`Worker` は抽象クラスで、以下の純粋仮想関数を持っています。
+
+```cpp
+virtual void showInfo() = 0;
+virtual string getDeptName() = 0;
 ```
 
-### クイックスタート
+`Employee`、`Manager`、`Boss` はそれぞれ `Worker` クラスを継承し、職種ごとの情報表示を実装しています。
 
-#### 必要な環境
+---
 
-- C++コンパイラ (g++, clang++, MSVC など)
-- C++11以上のサポート
+### 使用した主な技術
 
-#### コンパイル
+- C++
+- クラスとオブジェクト
+- 継承
+- ポリモーフィズム
+- 純粋仮想関数
+- 動的メモリ管理
+- ポインタ配列
+- ファイル入出力
+- テキストファイル保存
+- コンソールアプリケーション
+
+---
+
+### 実行環境
+
+このプログラムは、主にWindows環境での実行を想定しています。
+
+プログラム内で以下のようなWindows向けコマンドを使用しています。
+
+```cpp
+system("pause");
+system("cls");
+```
+
+---
+
+### コンパイル例
 
 ```bash
-# Linux/macOS
-g++ main.cpp workerManager.cpp employee.cpp manager.cpp boss.cpp -o employee_system
-
-# Windows (MinGW)
-g++ main.cpp workerManager.cpp employee.cpp manager.cpp boss.cpp -o employee_system.exe
+g++ "Employee Management System.cpp" workerManager.cpp employee.cpp manager.cpp boss.cpp -o employee_system -std=c++11
 ```
 
-#### 実行
+実行：
 
 ```bash
-# Linux/macOS
 ./employee_system
+```
 
-# Windows
+Windowsの場合：
+
+```bash
 employee_system.exe
 ```
 
-### 使用方法
+---
 
-プログラムを起動すると、以下のメニューが表示されます:
+### 学習目的
 
-```
-***************************************
-***** 会社関係者管理システムへようこそ ***
-***************************************
-******** 0. 管理プログラムを終了 ********
-******** 1. 会社関係者情報を追加 ********
-******** 2. 会社関係者情報を表示 ********
-******** 3. 退職した従業員を削除 ********
-******** 4. 会社関係者情報を変更 ********
-******** 5. 会社関係者情報を検索 ********
-******** 6. 番号順に並べ替え ************
-******** 7. すべてのデータを削除 ********
-***************************************
-```
+このプロジェクトでは、C++を使って簡単な従業員管理システムを作成し、以下の内容を練習しました。
 
-#### 操作例
-
-**従業員の追加:**
-1. メニューで「1」を選択
-2. 追加する人数を入力
-3. 各従業員の情報を入力:
-   - 従業員番号
-   - 従業員名
-   - 職種 (1:一般従業員, 2:マネージャー, 3:社長)
-
-**従業員の検索:**
-1. メニューで「5」を選択
-2. 検索方法を選択 (番号検索 or 名前検索)
-3. 検索キーワードを入力
-
-### クラス詳細
-
-#### Worker (抽象基底クラス)
-
-従業員の共通インターフェースを定義する抽象クラスです。
-
-**メンバー変数:**
-- `m_Id` (int) - 従業員番号
-- `m_Name` (string) - 従業員名
-- `m_DeptId` (int) - 部門番号
-
-**純粋仮想関数:**
-- `showInfo()` - 個人情報を表示
-- `getDeptName()` - 職位名を取得
-
-#### Employee (一般従業員)
-
-**職務内容:** マネージャーから与えられた業務を遂行する
-
-#### Manager (マネージャー)
-
-**職務内容:** 上司から任された仕事を完了させ、従業員にタスクを割り当てる
-
-#### Boss (社長)
-
-**職務内容:** 会社のすべての業務を管理する
-
-#### WorkerManager (管理クラス)
-
-システムのコア機能を管理するクラスです。
-
-**主要メソッド:**
-- `Add_Emp()` - 従業員追加
-- `Show_Emp()` - 従業員表示
-- `Del_Emp()` - 従業員削除
-- `Mod_Emp()` - 従業員情報変更
-- `Find_Emp()` - 従業員検索
-- `sort_Emp()` - 並び替え
-- `Clean_File()` - 全データ削除
-- `save()` - ファイル保存
-
-### データ保存形式
-
-従業員データは `empfilex.txt` に以下の形式で保存されます:
-
-```
-[従業員番号] [従業員名] [部門番号]
-```
-
-**部門番号の対応:**
-- 1 = 一般従業員
-- 2 = マネージャー
-- 3 = 社長
-
-### 技術的特徴
-
-- **オブジェクト指向設計:** 継承とポリモーフィズムを活用
-- **動的メモリ管理:** 動的配列による柔軟なデータ管理
-- **ファイルI/O:** データの永続化をサポート
-- **選択ソート:** 効率的なデータ並び替えアルゴリズム
-- **エラーハンドリング:** ファイル存在確認とデータ検証
-
-### 注意事項
-
-- データファイル (`empfilex.txt`) は自動的に作成されます
-- データ削除操作は取り消せないため、注意して実行してください
-- 従業員番号は一意である必要があります
-- プログラム終了時はメニューから「0」を選択してください
+- クラスを使った設計
+- 継承とポリモーフィズム
+- 抽象クラスの使い方
+- 動的メモリの確保と解放
+- ファイルへの保存と読み込み
+- コンソールメニューによる操作
 
 ---
+
+## English
+
+### Overview
+
+This project is a simple console-based employee management system written in C++.
+
+It was created as a self-practice project to learn C++ classes, inheritance, polymorphism, dynamic memory management, and file input/output.  
+The system can add, display, delete, modify, search, sort, and save employee information.
+
+---
+
+### Features
+
+- Display menu interface
+- Add employee information
+- Show employee information
+- Delete employee information
+- Modify employee information
+- Search employee by ID
+- Search employee by name
+- Sort employees by ID in ascending or descending order
+- Clear all employee data
+- Save employee data to `empfilex.txt`
+- Load employee data from file when the program starts
+
+---
+
+### Employee Types
+
+This system manages three types of employees.
+
+| Type ID | Position |
+|---|---|
+| 1 | Employee |
+| 2 | Manager |
+| 3 | Boss |
+
+Each employee type is implemented by inheriting from the abstract `Worker` class.
+
+---
+
+### Program Flow
+
+```text
+Show menu
+    ↓
+User selects an operation
+    ↓
+Add / show / delete / modify / search / sort employee data
+    ↓
+Save changes to file
+    ↓
+Load data from file when the program starts next time
+```
+
+---
+
+### Project Structure
+
+```text
+Employee_Management_System/
+│
+├── Employee Management System.cpp
+├── worker.h
+├── workerManager.h
+├── workerManager.cpp
+├── employee.h
+├── employee.cpp
+├── manager.h
+├── manager.cpp
+├── boss.h
+├── boss.cpp
+├── empfiex.txt
+└── README.md
+```
+
+---
+
+### File Description
+
+| File | Description |
+|---|---|
+| `Employee Management System.cpp` | Main function and menu control |
+| `worker.h` | Defines the abstract base class `Worker` |
+| `workerManager.h` | Declaration of the `WorkerManager` class |
+| `workerManager.cpp` | Implementation of employee management functions |
+| `employee.h / employee.cpp` | Definition and implementation of the `Employee` class |
+| `manager.h / manager.cpp` | Definition and implementation of the `Manager` class |
+| `boss.h / boss.cpp` | Definition and implementation of the `Boss` class |
+| `empfilex.txt` | File used to save employee data |
+
+---
+
+### Class Structure
+
+```text
+Worker
+│
+├── Employee
+├── Manager
+└── Boss
+```
+
+`Worker` is an abstract class with the following pure virtual functions.
+
+```cpp
+virtual void showInfo() = 0;
+virtual string getDeptName() = 0;
+```
+
+`Employee`, `Manager`, and `Boss` inherit from `Worker` and implement their own information display functions.
+
+---
+
+### Main Technologies Used
+
+- C++
+- Class and object
+- Inheritance
+- Polymorphism
+- Pure virtual functions
+- Dynamic memory management
+- Pointer array
+- File input/output
+- Text file saving
+- Console application
+
+---
+
+### Environment
+
+This program is mainly designed for Windows console environments.
+
+It uses Windows-specific commands such as:
+
+```cpp
+system("pause");
+system("cls");
+```
+
+---
+
+### Build Example
+
+```bash
+g++ "Employee Management System.cpp" workerManager.cpp employee.cpp manager.cpp boss.cpp -o employee_system -std=c++11
+```
+
+Run:
+
+```bash
+./employee_system
+```
+
+On Windows:
+
+```bash
+employee_system.exe
+```
+
+---
+
+### Purpose
+
+The purpose of this project is to practice basic C++ programming through a small employee management system.
+
+Through this project, I practiced:
+
+- Class-based program design
+- Inheritance and polymorphism
+- Abstract classes
+- Dynamic memory allocation and release
+- File saving and loading
+- Console menu interaction
